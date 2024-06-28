@@ -1,14 +1,8 @@
-import express from 'express';
+import { createApp } from './app.js';
 
-const app = express();
+const PORT = process.env.PORT || 3000;
+const app = createApp();
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
-const hostname = process.env.HOSTNAME || '127.0.0.1';
-const port = Number(process.env.PORT || 3000);
-
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
 });

@@ -1,10 +1,10 @@
 {
-  "name": "nodejs",
+  "name": "todoapp-api",
   "version": "1.0.0",
   "keywords": [],
-  "author": "",
+  "author": "Mate academy",
   "license": "ISC",
-  "description": "",
+  "description": "This is a RESTful API for a todoapp",
   "main": "src/index.js",
   "type": "module",
   "lint-staged": {
@@ -22,11 +22,15 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.2",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.57.0",

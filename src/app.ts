@@ -1,7 +1,13 @@
-import { createServer } from 'node:http';
+import express from 'express';
+import cors from 'cors';
+import { todosRouter } from './api/todos.router.js';
 
-export const app = createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
+export function createApp() {
+  const app = express();
+
+  app.use(express.json());
+  app.use(cors());
+  app.use('/todos', todosRouter);
+
+  return app;
+}
