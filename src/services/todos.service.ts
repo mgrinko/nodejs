@@ -42,10 +42,20 @@ export function update({ id, title, completed }: Todo) {
   return Object.assign(todo, { title, completed });
 }
 
+export function deleteMany(ids: string[]) {
+  return ids.map(deleteById);
+}
+
+export function updateMany(todos: Todo[]) {
+  return todos.map(update);
+}
+
 export const todosService = {
   getAll,
   getById,
   create,
   deleteById,
   update,
+  deleteMany,
+  updateMany,
 };

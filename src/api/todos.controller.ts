@@ -38,9 +38,31 @@ export const update: RequestHandler = async (req, res) => {
   res.json(updatedTodo);
 };
 
+export const deleteMany: RequestHandler = async (req, res) => {
+  const ids = req.body;
+
+  if (!Array.isArray(ids)) return res.sendStatus(400);
+
+  await todosService.deleteMany(req.body);
+
+  res.sendStatus(204);
+};
+
+export const updateMany: RequestHandler = async (req, res) => {
+  const todos = req.body;
+
+  if (!Array.isArray(todos)) return res.sendStatus(400);
+
+  const updatedTodos = await todosService.updateMany(todos);
+
+  res.json(updatedTodos);
+};
+
 export const todosController = {
   getAll,
   create,
   deleteOne,
   update,
+  deleteMany,
+  updateMany,
 };
