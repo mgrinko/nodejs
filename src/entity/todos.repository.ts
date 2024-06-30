@@ -50,7 +50,7 @@ export async function updateMany(todos: Todo[]) {
   }
 }
 
-export const todosService = {
+export const todosRepository = {
   getAll,
   getById,
   create,

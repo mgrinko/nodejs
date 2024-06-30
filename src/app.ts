@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 import { todosRouter } from './api/todos.router.js';
 
