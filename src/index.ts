@@ -17,7 +17,7 @@ const cb: CloseWithGraceCallback = ({ err, signal }, done) => {
   }
 
   server.close(async () => {
-    await db.end();
+    await db.$disconnect();
     console.log('Server is closed');
 
     done();
