@@ -2,7 +2,9 @@ import { Todo } from '@prisma/client';
 import { db } from '../utils/db.js';
 
 export function getAll() {
-  return db.todo.findMany();
+  return db.todo.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
 }
 
 export async function getById(id: string) {
