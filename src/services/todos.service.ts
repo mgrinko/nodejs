@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { db } from '../utils/db.js';
 
 interface Todo {
   id: string;
@@ -6,48 +6,48 @@ interface Todo {
   completed: boolean;
 }
 
-const todos: Todo[] = [];
+export async function getAll() {
+  const { rows } = await db.query<Todo>('SELECT * FROM todos');
 
-export function getAll() {
-  return todos;
+  return rows;
 }
 
-export function getById(id: string) {
-  return todos.find(todo => todo.id === id);
+export async function getById(id: string) {
+  const sql = `SELECT * FROM todos WHERE id = $1`;
+  const { rows } = await db.query<Todo>(sql, [id]);
+
+  return rows[0];
 }
 
-export function create(title: string) {
-  const todo = { id: uuidv4(), title, completed: false };
+export async function create(title: string) {
+  const sql =
+    'INSERT INTO todos (title, completed) VALUES ($1, false) RETURNING *';
+  const { rows } = await db.query<Todo>(sql, [title]);
 
-  todos.push(todo);
-
-  return todo;
+  return rows[0];
 }
 
-export function deleteById(id: string) {
-  const index = todos.findIndex(todo => todo.id === id);
-
-  if (index === -1) return;
-
-  const [todo] = todos.splice(index, 1);
-
-  return todo;
+export async function deleteById(id: string) {
+  await db.query('DELETE FROM todos WHERE id = $1', [id]);
 }
 
-export function update({ id, title, completed }: Todo) {
-  const todo = todos.find(todo => todo.id === id);
+export async function update({ id, title, completed }: Todo) {
+  const sql =
+    'UPDATE todos SET title = $2, completed = $3 WHERE id = $1 RETURNING *';
+  const { rows } = await db.query<Todo>(sql, [id, title, completed]);
 
-  if (!todo) return;
-
-  return Object.assign(todo, { title, completed });
+  return rows[0];
 }
 
-export function deleteMany(ids: string[]) {
-  return ids.map(deleteById);
+export async function deleteMany(ids: string[]) {
+  const sql = `DELETE FROM todos WHERE id = ANY($1)`;
+  await db.query(sql, [ids]);
 }
 
-export function updateMany(todos: Todo[]) {
-  return todos.map(update);
+export async function updateMany(todos: Todo[]) {
+  for (const todo of todos) {
+    await update(todo);
+  }
 }
 
 export const todosService = {
