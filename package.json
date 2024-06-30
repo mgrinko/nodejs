@@ -18,8 +18,7 @@
     "start": "node --env-file=.env dist/index.js",
     "dev": "tsx --watch --env-file=.env --inspect=0.0.0.0 src/index.ts",
     "lint": "eslint --fix src",
-    "format": "prettier ./src --write",
-    "prepare": "husky"
+    "format": "prettier ./src --write"
   },
   "dependencies": {
     "@prisma/client": "5.16.1",
