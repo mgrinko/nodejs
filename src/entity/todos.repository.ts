@@ -21,7 +21,11 @@ export async function deleteById(id: string) {
   return db.todo.delete({ where: { id } });
 }
 
-export async function update({ id, title, completed }: Todo) {
+export async function update({
+  id,
+  title,
+  completed,
+}: Pick<Todo, 'id' | 'title' | 'completed'>) {
   return db.todo.update({
     where: { id },
     data: { title, completed },
